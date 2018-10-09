@@ -1,0 +1,25 @@
+<html>
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+
+<script>
+$(document).ready(function(){
+	$("#getDataButton").on({
+	    click: function(){
+	      $("#message").text("I want to get data");
+		} 
+	});
+
+	$("#message").text("I am inserted text from Jquery");	
+
+});
+
+</script>
+
+<button id="getDataButton">Get data</button>
+<div id="message"></div> 
+
+</body>
+</html>
