@@ -1,25 +1,93 @@
 <html>
 <head>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	
 </head>
 <body>
 
 <script>
-$(document).ready(function(){
-	$("#getDataButton").on({
-	    click: function(){
-	      $("#message").text("I want to get data");
-		} 
-	});
 
-	$("#message").text("I am inserted text from Jquery");	
+const api_url = "http://localhost:8888/liverpool_stats/api.php"
+
+$(document).ready(function(){
+
+	fetch(api_url)
+		.then(function(response) {
+		return response.json();
+	})
+		.then(function(myJson) {
+			console.log(JSON.stringify(myJson))
+			
+			data = myJson.results
+			$("#map").html(
+				"<tr>" + 
+					"<td class='pr-4'>ID</td>" +
+					"<td class='pr-4'>Year</td>" +
+					"<td class='pr-4'>Position</td>" + 
+					"<td class='pr-4'>Games</td>" + 
+					"<td class='pr-4'>Points</td>" + 
+					"<td class='pr-4'>Won</td>" + 
+					"<td class='pr-4'>Draws</td>" + 
+					"<td class='pr-4'>Lost</td>" +
+					"<td class='pr-4'>Goal Difference</td>" +  
+				"</tr>" + 
+				data.map(item => 	"<tr><td>" + 	item.id  + 
+									"</td><td>" + 	item.year +  
+									"</td><td>" +	item.position + 
+									"</td><td>" +	item.games + 
+									"</td><td>" +	item.points + 
+									"</td><td>" +	item.won + 
+									"</td><td>" +	item.draws + 
+									"</td><td>" +	item.lost + 
+									"</td><td>" +	item.goal_diff +
+									"</td></tr>")
+			);
+
+	})
+	 	.catch(function(error) {
+    		console.log(error);
+  	}); 
+
+
+	
 
 });
 
 </script>
 
-<button id="getDataButton">Get data</button>
-<div id="message"></div> 
+<div id="stringify"></div> 
+	
+<div class="container">
+	<div class="m-4">
+		<h4>Table</h4>
+		<div class="border bg-light p-4">
+			<table id="map"></table>
+		</div>
+	</div>	
+	<div class="m-4">
+		<h4>API URL</h4>
+		<pre class="border bg-light p-4">const api_url = http://localhost:8888/liverpool_stats/api.php</pre>
+	</div>
+	<div class="m-4">
+		<h4>JavaScript implementation</h4>
+		<pre class="border bg-light p-4">
+fetch(api_url)
+	.then(function(response) {
+		return response.json();
+	})
+	.then(function(myJson) {
+		console.log(JSON.stringify(myJson))
+	})
+	.catch(function(error) {
+		console.log(error);
+	}); 
+  		</pre>
+	</div>
+</div>
+
+
+
 
 </body>
 </html>
