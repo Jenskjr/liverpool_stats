@@ -43,51 +43,42 @@ $(document).ready(function(){
 									"</td><td>" +	item.goal_diff +
 									"</td></tr>")
 			);
-
 	})
 	 	.catch(function(error) {
     		console.log(error);
   	}); 
-
-
-	
-
 });
 
 </script>
 
-<div id="stringify"></div> 
-	
-<div class="container">
-	<div class="m-4">
-		<h4>Table</h4>
-		<div class="border bg-light p-4">
-			<table id="map"></table>
+	<div id="stringify"></div> 
+		
+	<div class="container">
+		<div class="m-4">
+			<h4>Table</h4>
+			<div class="border bg-light p-4">
+				<table id="map"></table>
+			</div>
+		</div>	
+		<div class="m-4">
+			<h4>API URL</h4>
+			<pre class="border bg-light p-4">const api_url = http://localhost:8888/liverpool_stats/api.php</pre>
 		</div>
-	</div>	
-	<div class="m-4">
-		<h4>API URL</h4>
-		<pre class="border bg-light p-4">const api_url = http://localhost:8888/liverpool_stats/api.php</pre>
+		<div class="m-4">
+			<h4>JavaScript implementation</h4>
+			<pre class="border bg-light p-4">
+	fetch(api_url)
+		.then(function(response) {
+			return response.json();
+		})
+		.then(function(myJson) {
+			console.log(JSON.stringify(myJson))
+		})
+		.catch(function(error) {
+			console.log(error);
+		}); 
+	  		</pre>
+		</div>
 	</div>
-	<div class="m-4">
-		<h4>JavaScript implementation</h4>
-		<pre class="border bg-light p-4">
-fetch(api_url)
-	.then(function(response) {
-		return response.json();
-	})
-	.then(function(myJson) {
-		console.log(JSON.stringify(myJson))
-	})
-	.catch(function(error) {
-		console.log(error);
-	}); 
-  		</pre>
-	</div>
-</div>
-
-
-
-
 </body>
 </html>
