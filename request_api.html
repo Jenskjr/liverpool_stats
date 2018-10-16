@@ -8,7 +8,7 @@
 
 <script>
 
-const api_url = "http://localhost:8888/liverpool_stats/api.php"
+const api_url = "http://jenskjr.dk/liverpool_stats/api.php"
 
 $(document).ready(function(){
 
@@ -60,21 +60,21 @@ $(document).ready(function(){
 		</div>	
 		<div class="m-4">
 			<h4>API URL</h4>
-			<pre class="border bg-light p-4">const api_url = http://localhost:8888/liverpool_stats/api.php</pre>
+			<pre class="border bg-light p-4">const api_url = http://jenskjr.dk/liverpool_stats/api.php;</pre>
 		</div>
 		<div class="m-4">
 			<h4>JavaScript implementation</h4>
 			<pre class="border bg-light p-4">
-	fetch(api_url)
-		.then(function(response) {
-			return response.json();
-		})
-		.then(function(myJson) {
-			console.log(JSON.stringify(myJson))
-		})
-		.catch(function(error) {
-			console.log(error);
-		}); 
+fetch(api_url)
+	.then(function(response) {
+		return response.json();
+	})
+	.then(function(myJson) {
+		console.log(JSON.stringify(myJson));
+	})
+	.catch(function(error) {
+		console.log(error);
+	}); 
 	  		</pre>
 		</div>
 	</div>
