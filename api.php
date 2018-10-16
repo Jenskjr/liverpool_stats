@@ -1,7 +1,7 @@
 <?php
 
-require 'connection.php';
-require 'sql.php';
+require 'some_connection.php';
+require 'some_sql.php';
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
