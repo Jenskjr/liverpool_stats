@@ -15,14 +15,13 @@ $result = $conn->query($sql);
 
 if ($result->num_rows > 0) {
 
-	$products_arr=array();
     $results_arr["results"]=array();
 
 	while($row = $result->fetch_assoc()) {
     	
     	extract($row);
 
-    	$product_item=array(
+    	$stats_item=array(
             "id" => $id,
             "year" => $year, 
             "position" => $position, 
@@ -34,7 +33,7 @@ if ($result->num_rows > 0) {
             "goal_diff" => $goal_diff
         );
 
-        array_push($results_arr["results"], $product_item);
+        array_push($results_arr["results"], $stats_item);
     }
 
     echo json_encode($results_arr);
