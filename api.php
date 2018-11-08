@@ -9,38 +9,75 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
-} 
+}
 
-$result = $conn->query($sql);
+// return an array with the latest premier league results
+if (isset($_GET['pl_results'])) {
 
-if ($result->num_rows > 0) {
+    $results = $conn->query($sql_pl_results);
 
-    $results_arr["results"]=array();
+    if ($results->num_rows > 0) {
 
-	while($row = $result->fetch_assoc()) {
-    	
-    	extract($row);
+        // creaete a container array
+        $results_arr["results"]=array();
 
-    	$stats_item=array(
+    	while($row = $results->fetch_assoc()) {
+        	
+        	extract($row);
+
+        	$stats_item=array(
+                "id" => $id,
+                "year" => $year, 
+                "position" => $position, 
+                "games" => $games,
+                "points" => $points, 
+                "won" => $won, 
+                "draws" => $draws, 
+                "lost" => $lost, 
+                "goal_diff" => $goal_diff
+            );
+
+            array_push($results_arr["results"], $stats_item);
+        }
+
+        echo json_encode($results_arr);
+
+    } else {
+        echo "no results found";
+    }
+}
+// return an array with titles won 
+elseif (isset($_GET['titles'])) {
+
+    $titles = $conn->query($sql_titles);
+
+    if ($titles->num_rows > 0) {
+
+        // create a contaner array
+        $titles_arr["titles"]=array();
+
+        while($row = $titles->fetch_assoc()) {
+        
+        extract($row);
+
+        $title_list=array(
             "id" => $id,
-            "year" => $year, 
-            "position" => $position, 
-            "games" => $games,
-            "points" => $points, 
-            "won" => $won, 
-            "draws" => $draws, 
-            "lost" => $lost, 
-            "goal_diff" => $goal_diff
+            "title_name" => $title_name, 
+            "title_count" => $title_count
         );
 
-        array_push($results_arr["results"], $stats_item);
+        array_push($titles_arr["titles"], $title_list);
     }
+    echo json_encode($titles_arr);
+    
+    } else {
+        echo "no results found";
+    }
+} 
 
-    echo json_encode($results_arr);
-
-
-} else {
-    echo "0 results";
+// default response if neither ?pl_results or ?titles
+else {
+        echo "no results found";
 }
 
 $conn->close();

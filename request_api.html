@@ -8,23 +8,44 @@
 </head>
 <body>
 
-<!--<canvas id="myChart"></canvas>-->
-
 <div class="container">
 	<div class="m-4">
-		<h4>Tabel</h4>
+		<h4>Tables of contents</h4>
 		<div class="border bg-light p-4">
-			<table id="map"></table>
+			<h6 class="pb-2">Latest Premier League results</h6>
+			<table id="pl_results"></table>
+			<h6 class="mt-4 pb-2">Total number of titles</h6>
+			<table id="total_titles"></table>
 		</div>
 	</div>	
 	<div class="m-4">
-		<h4>API URL</h4>
-		<pre class="border bg-light p-4">const api_url = "http://jenskjr.dk/liverpool_stats/api.php";</pre>
+		<h4>API URLs</h4>
+		<div class="border bg-light p-4">
+			<p>
+				const api_pl_results = "http://jenskjr.dk/liverpool_stats/api.php?pl_results";
+			</p><p>
+				const api_titles = "http://jenskjr.dk/liverpool_stats/api.php?titles";
+			</p>
+		</div>
 	</div>
 	<div class="m-4">
-		<h4>JavaScript implementering</h4>
+		<h4>JavaScript implementation</h4>
+		<h6 class="p-2">Latest Premier league results</h6>
 		<pre class="border bg-light p-4">
-fetch(api_url)
+fetch(api_pl_results)
+	.then(response => {
+		return response.json();
+	})
+	.then(myJson => {
+		console.log(JSON.stringify(myJson));
+	})
+	.catch(error => {
+		console.log(error);
+	}); 
+  		</pre>
+		<h6 class="p-2">Total number of titles</h6>
+		<pre class="border bg-light p-4">
+fetch(api_titles)
 	.then(response => {
 		return response.json();
 	})
@@ -37,21 +58,20 @@ fetch(api_url)
   		</pre>
 	</div>
 </div>
-
+	
 
 <script>
 
 //Table
-const api_url = "http://jenskjr.dk/liverpool_stats/api.php";
+const api_pl_results = "http://jenskjr.dk/liverpool_stats/api.php?pl_results";
 
-fetch(api_url)
+fetch(api_pl_results)
 	.then(response => {
-	return response.json();
-})
+		return response.json();
+	})
 	.then(myJson => {
-		
 		data = myJson.results
-		$("#map").html(
+		$("#pl_results").html(
 			"<tr>" + 
 				"<td class='pr-4'>ID</td>" +
 				"<td class='pr-4'>Year</td>" +
@@ -74,10 +94,36 @@ fetch(api_url)
 								"</td><td>" +	item.goal_diff +
 								"</td></tr>")
 		);
-})
+	})
  	.catch(error => {
 		console.log(error);
-}); 
+	});
+
+const api_titles = "http://jenskjr.dk/liverpool_stats/api.php?titles";
+
+fetch(api_titles)
+	.then(response => {
+		return response.json();
+	})
+	.then(myJson => {
+		data = myJson.titles
+		$("#total_titles").html(
+			"<tr>" + 
+				"<td class='pr-4 pb-2'>ID</td>" +
+				"<td class='pr-4 pb-2'>Title</td>" +
+				"<td class='pr-4 pb-2'>Number of titles</td>" +
+			"</tr>" + 
+			data.map(item => 	"<tr><td class='pr-4'>" + 	item.id  + 
+								"</td><td class='pr-4'>" + 	item.title_name +  
+								"</td><td class='pr-4'>" +	item.title_count + 
+								"</td></tr>")
+
+		);
+	})
+	.catch(error => {
+		console.log(error);
+	}); 
+
 
 </script>
 </body>
